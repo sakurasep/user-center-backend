@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -30,6 +32,7 @@ class UserServiceTest {
         user.setPassword("123");
         user.setPhone("123");
         user.setEmail("123");
+        user.setIsDelete(0);
 
 
         boolean result = userService.save(user); // 返回的 boolean 类型
@@ -39,7 +42,7 @@ class UserServiceTest {
 
 
     @Test
-    void userRegister() {
+    void userRegisterTest() {
         // 初始值
         String userAccount = "sakurasep";
         String password = "";
@@ -82,5 +85,14 @@ class UserServiceTest {
         result = userService.userRegister(userAccount, password, checkpassword);
         Assert.assertTrue(result > 0);
 
+    }
+
+    @Test
+    void userRegister() {
+        String userAccount = "sakurasep";
+        String password = "12345678";
+        String checkpassword = "12345678";
+        long result = userService.userRegister(userAccount, password, checkpassword);
+        System.out.println(result);
     }
 }
