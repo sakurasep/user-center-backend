@@ -6,7 +6,9 @@ spring:
     url: jdbc:mysql://192.168.0.69:3307/yupi_user-center
     username: root
     password: 123456
-
+  # session 失效时间
+  session:
+    timeout: 86400
 server:
   port: 8080
 

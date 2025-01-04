@@ -1,7 +1,5 @@
 package com.sakurasep.usercenter.service.impl;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sakurasep.usercenter.model.domain.User;
@@ -16,6 +14,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.sakurasep.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * @author sakurasep
@@ -33,8 +33,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     // 盐值混淆密码
     private static final String SALT = "sakura_password";
 
-    // 用户登录态键值
-    private static final String USER_LOGIN_STATE = "userLoginState";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
@@ -134,26 +132,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return null;
         }
 
-
-        // 用户脱敏
-        User safetyUser = new User();
-        safetyUser.setId(user.getId());
-        safetyUser.setUsername(user.getUsername());
-        safetyUser.setUserAccount(user.getUserAccount());
-        safetyUser.setAvatar(user.getAvatar());
-        safetyUser.setGender(user.getGender());
-        safetyUser.setPhone(user.getPhone());
-        safetyUser.setEmail(user.getEmail());
-        safetyUser.setUserStatus(user.getUserStatus());
-        safetyUser.setCreateTime(user.getCreateTime());
+        User safetyUser = getSafetyUser(user);
 
         // 用户的登录态
         request.getSession().setAttribute(USER_LOGIN_STATE, safetyUser);
-
         // 返回脱敏后的用户信息
         return safetyUser;
 
 
+    }
+
+    @Override
+    public User getSafetyUser(User originUser) {
+        // 用户脱敏
+        User safetyUser = new User();
+        safetyUser.setId(originUser.getId());
+        safetyUser.setUsername(originUser.getUsername());
+        safetyUser.setUserAccount(originUser.getUserAccount());
+        safetyUser.setAvatar(originUser.getAvatar());
+        safetyUser.setGender(originUser.getGender());
+        safetyUser.setPhone(originUser.getPhone());
+        safetyUser.setEmail(originUser.getEmail());
+        safetyUser.setUserStatus(originUser.getUserStatus());
+        safetyUser.setCreateTime(originUser.getCreateTime());
+        safetyUser.setUserRole(originUser.getUserRole());
+        return safetyUser;
     }
 }
 
