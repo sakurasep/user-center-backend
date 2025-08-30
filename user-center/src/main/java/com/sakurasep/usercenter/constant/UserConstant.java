@@ -13,4 +13,7 @@ public interface UserConstant {
     int DEFAULT = 0;
     int ADMIN_ROLE = 1;
 
+    // 默认头像地址
+    String USER_AVATAR = "https://bu.dusays.com/2025/08/26/68ad6eef3a4d7.png";
+
 }

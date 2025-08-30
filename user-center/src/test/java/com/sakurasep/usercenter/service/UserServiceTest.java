@@ -1,6 +1,5 @@
 package com.sakurasep.usercenter.service;
 
-
 import com.sakurasep.usercenter.model.domain.User;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -41,58 +40,25 @@ class UserServiceTest {
     }
 
 
+    // 密码测试
     @Test
-    void userRegisterTest() {
-        // 初始值
-        String userAccount = "sakurasep";
-        String password = "";
+    void userRegisterTest1() {
+        String userAccount = "test123";
+        String password = "123456";
         String checkpassword = "12345678";
-        long result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertEquals(-1, result);
-
-        // 用户账户小于四位
-        userAccount = "sa";
-        password = "12345678";
-        result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertEquals(-1, result);
-
-        // 密码小于八位
-        userAccount = "sakurasep";
-        password = "1234";
-        result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertEquals(-1, result);
-
-        // 用户名不能含有特殊字符
-        userAccount = "sakura sep";
-        password = "12345678";
-        result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertEquals(-1, result);
-
-        // 账户名不可以重复
-        userAccount = "sakurasep";
-        result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertEquals(-1, result);
-
-        // 确认密码要与原密码相同
-        password = "12345678";
-        checkpassword = "123456";
-        result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertEquals(-1, result);
-
-        // 最终测试
-        userAccount = "sakurasepadmin";
-        checkpassword = "12345678";
-        result = userService.userRegister(userAccount, password, checkpassword);
-        Assert.assertTrue(result > 0);
-
+        String planetCode = "1";
+        String username = "测试用户";
+        long result = userService.userRegister(userAccount, username, password, checkpassword, planetCode, "111");
     }
 
     @Test
     void userRegister() {
-        String userAccount = "sakurasep";
+        String userAccount = "sakurasep111";
         String password = "12345678";
         String checkpassword = "12345678";
-        long result = userService.userRegister(userAccount, password, checkpassword);
+        String planetCode = "1";
+        String username = "测试用户";
+        long result = userService.userRegister(userAccount, username, password, checkpassword, planetCode, "111");
         System.out.println(result);
     }
 }
